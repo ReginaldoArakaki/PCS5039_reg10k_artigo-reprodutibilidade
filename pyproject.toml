@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "reg10k-estudo"
+version = "0.1.0"
+description = "Coleta e análise reproduzível da evolução arquitetural Reg10k"
+requires-python = ">=3.10"
+dependencies = ["PyYAML>=6.0", "matplotlib>=3.8"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

@@ -1,0 +1,71 @@
+{
+  "execucoes_total": 92,
+  "execucoes_referencia": 46,
+  "problemas": [],
+  "grupos": {
+    "v0/FALHA": {
+      "n": 6,
+      "desperdicio_s_media": 10.3,
+      "escuro_s_media": 58.6333,
+      "fidelidade_pct_media": 48.3
+    },
+    "v0/FALSO_NEGATIVO": {
+      "n": 5,
+      "desperdicio_s_media": 0.0,
+      "escuro_s_media": 719.04,
+      "fidelidade_pct_media": 35.26
+    },
+    "v0/FALSO_POSITIVO": {
+      "n": 3,
+      "desperdicio_s_media": 61.6667,
+      "escuro_s_media": 0.0,
+      "fidelidade_pct_media": 59.9
+    },
+    "v0/NORMAL": {
+      "n": 6,
+      "desperdicio_s_media": 152.5,
+      "escuro_s_media": 0.5,
+      "fidelidade_pct_media": 90.6833
+    },
+    "v0dt/GEMEO_DIGITAL": {
+      "n": 12,
+      "desperdicio_s_media": 61.15,
+      "escuro_s_media": 0.4,
+      "fidelidade_pct_media": 66.0
+    },
+    "v1dt/FALHA": {
+      "n": 2,
+      "desperdicio_s_media": 112.25,
+      "escuro_s_media": 1.45,
+      "fidelidade_pct_media": 62.45
+    },
+    "v1dt/FALSO_NEGATIVO": {
+      "n": 1,
+      "desperdicio_s_media": 65.7,
+      "escuro_s_media": 222.0,
+      "fidelidade_pct_media": 49.2
+    },
+    "v1dt/FALSO_POSITIVO": {
+      "n": 1,
+      "desperdicio_s_media": 60.0,
+      "escuro_s_media": 0.4,
+      "fidelidade_pct_media": 76.2
+    },
+    "v1dt/GEMEO_DIGITAL": {
+      "n": 4,
+      "desperdicio_s_media": 138.775,
+      "escuro_s_media": 34.35,
+      "fidelidade_pct_media": 58.475
+    },
+    "v1dt/NORMAL": {
+      "n": 6,
+      "desperdicio_s_media": 98.6667,
+      "escuro_s_media": 1.05,
+      "fidelidade_pct_media": 74.8167
+    }
+  },
+  "correlacoes_pearson": {
+    "taxa_percepcao_x_taxa_escuro": 0.9136,
+    "taxa_percepcao_x_fidelidade_pct": -0.7198
+  }
+}

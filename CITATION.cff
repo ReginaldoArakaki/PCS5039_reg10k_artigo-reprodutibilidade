@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "Se você usar este pacote, cite o software e o artigo associado."
+title: "Reg10k: pacote de reprodutibilidade da evolução arquitetural e do Digital Twin"
+type: software
+version: 0.1.0
+date-released: 2026-10-26
+authors:
+  - family-names: Arakaki
+    given-names: Reginaldo
+affiliation: "Escola Politécnica da Universidade de São Paulo"
+repository-code: "https://github.com/ReginaldoArakaki/PCS5039_reg10k_artigo-reprodutibilidade"
+license: MIT
+keywords:
+  - Internet of Things
+  - Digital Twin
+  - software architecture
+  - reproducibility
+  - smart home

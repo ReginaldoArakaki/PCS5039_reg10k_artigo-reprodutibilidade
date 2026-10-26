@@ -1,0 +1,5 @@
+metricas_estaticas: [artefatos, loc_documentacao, loc_codigo, loc_dados_contratos, cenarios, schemas, testes, invariantes]
+metricas_operacionais: [desperdicio_s, escuro_com_ocupante_s, apagamentos_indevidos, latencia_reacao_ms_p95]
+metricas_gemeo: [espelho_fiel_pct, erro_de_percepcao_s, erro_de_sincronizacao_s, espelho_nao_afirma_s]
+metricas_comportamento: [cobertura_comportamental_pct, tempo_inconclusivo_s, episodios_ocupacao, perfil_maduro]
+normalizacao_multiambiente: comodo-segundo

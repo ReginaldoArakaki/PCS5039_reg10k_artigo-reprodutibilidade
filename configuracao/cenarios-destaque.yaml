@@ -1,0 +1,9 @@
+cenarios:
+  N01: fluxo normal de entrada e saída
+  FN01: falso negativo por imobilidade
+  DT05: partição de rede e abstenção honesta
+  DT08: canal realista e decomposição causal
+  M01: circulação básica entre sala e cozinha
+  M05: falso negativo multiambiente
+  M12: fluxo multiambiente com Digital Twin
+  M14: ambiguidade de passagem sem direção

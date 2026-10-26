@@ -1,0 +1,11 @@
+repositorio_origem: https://github.com/ReginaldoArakaki/PCS5039_ambiente_reg10k_vCl0
+repositorio_codex: https://github.com/ReginaldoArakaki/PCS5039_ambiente_reg10k_vCx0
+versoes:
+  - {nome: v0, ref: be2006e, linha: origem}
+  - {nome: v0dt, ref: v0dt, linha: origem}
+  - {nome: v0dta, ref: v0dta, linha: origem}
+  - {nome: v0dtb-codex, ref: ac91ab8, linha: codex}
+  - {nome: v1dt, ref: v1dt, linha: origem}
+  - {nome: v1dta, ref: v1dta, linha: origem}
+  - {nome: v1dtb, ref: v1dtb, linha: origem}
+  - {nome: v1dtb-codex, ref: 4eb02ae, linha: codex}
