@@ -30,6 +30,7 @@ python scripts/coletar.py --repo ..\reg10k-v0dtb
 python scripts/analisar.py --catalogo ..\reg10k-v0dtb\saida\catalogo.json
 python scripts/gerar_resultados.py
 python scripts/construir_base_evolucao.py --repos <diretorio-dos-clones> --plano <ambiente-simulacao-v1dt.1.md> --sincronismo <sincronismo.xlsx> --saida dados/evolucao
+python scripts/analisar_evidencias_ciaca.py --base dados/evolucao/reg10k-evolucao.sqlite --saida dados/evolucao/analise-ciaca --bootstrap 5000 --semente 5039
 python -m pytest -q
 ```
 

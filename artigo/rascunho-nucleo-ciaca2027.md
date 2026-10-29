@@ -111,7 +111,7 @@ A navegação apresenta painel de cenários, planta, estados físicos, espelho, 
 
 ### 7.1 Cobertura e verificabilidade
 
-As três versões executaram integralmente as 30 sementes e os dois controladores. Todos os 5.580 registros satisfizeram os invariantes avaliados. O controlador de referência satisfez os requisitos em 100% das execuções da V0, 99,87% da V1 e 100% da V2. O controlador de grupo obteve 100%, 89,87% e 68,05%, respectivamente.
+As três versões executaram integralmente as 30 sementes e os dois controladores. Todos os 5.580 registros satisfizeram os invariantes avaliados. O controlador de referência satisfez os requisitos em 100% das execuções da V0, 99,87% da V1 e 100% da V2. O controlador de grupo obteve 100%, 89,87% e 68,05%, respectivamente. Na comparação pareada, V1 possui 701 pares em que ambos atendem aos requisitos, 78 em que apenas a referência atende e um em que ambos falham; V2 possui 592 pares em que ambos atendem e 278 em que apenas a referência atende. Não há par em que somente o controlador de grupo atenda.
 
 O resultado não permite afirmar que a arquitetura de referência é universalmente melhor, pois os cenários não formam a mesma amostra entre versões. Ele mostra, contudo, uma propriedade didática importante: o aumento da topologia e da diversidade de situações expõe limitações de uma implementação alternativa que não aparecem no ambiente mais simples. Os invariantes permanecerem satisfeitos enquanto requisitos de cenário falham também separa duas dimensões: integridade estrutural do ambiente e adequação funcional do controlador.
 
@@ -135,7 +135,11 @@ O tempo médio de gêmeo não atual passa de 47,42 s na V0 para 92,68 s na V1 e 
 
 Os dois controladores produzem cargas próximas. Na V2, por exemplo, o controlador de referência processa em média 2.021,11 eventos e o de grupo, 2.019,18. As diferenças de requisitos, portanto, não decorrem de uma ausência geral de execução. Elas devem ser localizadas nas famílias e decisões específicas.
 
-Algumas métricas não podem ser comparadas por média simples. A latência de reação p95 média do controlador de referência permanece próxima de 50 ms nos cenários que exercitam reação, enquanto o controlador de grupo possui muitas observações iguais a zero. Zero pode significar ausência do fenômeno medido, e não reação instantânea. A análise final deverá separar valores não aplicáveis de valores efetivamente nulos antes de comparar desempenho.
+Para métricas contínuas, calculou-se a diferença `grupo_exemplo − referência` em cada par. Como as 30 sementes de um mesmo roteiro não constituem necessariamente 30 situações independentes, os intervalos de confiança foram obtidos por 5.000 reamostragens das médias dos cenários. Na V2, o controlador de grupo reduz o desperdício médio em 12,37 s, com IC95 de −26,75 a −2,07 s, mas aumenta o tempo no escuro com ocupante em 1,41 s, IC95 de 1,02 a 1,85 s, e reduz a fidelidade do espelho em 0,08 ponto percentual, IC95 de −0,11 a −0,06. O resultado evidencia um compromisso entre energia, conforto e fidelidade, não superioridade geral.
+
+O mesmo sentido do tempo no escuro aparece nas três versões: diferença média de 0,47 s na V0, IC95 de 0,28 a 0,75, e de 1,30 s na V1, IC95 de 0,95 a 1,64. Para desperdício, os intervalos de V0 e V1 alcançam zero; apenas na V2 a diferença é direcional neste resumo exploratório. Os intervalos são condicionais aos cenários existentes e não devem ser generalizados para outras residências ou controladores.
+
+Algumas métricas não podem ser comparadas por média simples. A latência de reação p95 média do controlador de referência permanece próxima de 50 ms nos cenários que exercitam reação, enquanto o controlador de grupo possui muitas observações iguais a zero. A base distingue valor nulo de zero registrado, mas zero ainda pode significar ausência do fenômeno medido, e não reação instantânea. Por isso, a análise preserva para cada métrica as contagens de nulos, zeros e valores positivos e exclui pares nulos da comparação. Latência somente será interpretada após verificar a aplicabilidade em cada família.
 
 Esse cuidado é parte da contribuição metodológica. Um laboratório de arquitetura não deve apenas gerar números; deve tornar explícitas a semântica da métrica, a população considerada e as condições em que uma agregação é válida.
 

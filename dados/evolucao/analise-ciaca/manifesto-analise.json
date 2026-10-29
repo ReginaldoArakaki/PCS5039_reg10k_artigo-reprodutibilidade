@@ -1,0 +1,15 @@
+{
+  "base": "C:\\Users\\Reginaldo\\OneDrive\\Documentos\\USP 2026\\PCS5939 - Modelagem Iluminacao Automatizada\\PCS5039_reg10k_artigo-reprodutibilidade\\dados\\evolucao\\reg10k-evolucao.sqlite",
+  "bootstrap": 5000,
+  "semente": 5039,
+  "n_execucoes": 5580,
+  "n_pares": 2790,
+  "arquivos": [
+    "taxas-atendimento.csv",
+    "discordancias-pareadas.csv",
+    "comparacao-pareada-controladores.csv",
+    "semantica-nulos-zeros.csv",
+    "resumo-por-familia.csv",
+    "analise-estatistica-ciaca.md"
+  ]
+}

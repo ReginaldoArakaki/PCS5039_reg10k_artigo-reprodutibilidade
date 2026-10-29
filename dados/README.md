@@ -4,6 +4,9 @@
 - `processados/`: JSONs reproduzíveis produzidos pelos coletores.
 - `evolucao/`: SQLite canônico, CSVs de intercâmbio, relatório analítico e
   metadados usados para gerar a planilha longitudinal V0–V2.
+- `evolucao/analise-ciaca/`: taxas de atendimento, discordâncias pareadas,
+  bootstrap por cenário, semântica de nulos/zeros e resultados por família
+  usados no manuscrito CIACA 2027.
 
 Os arquivos processados devem registrar commits e regras de normalização. O
 código-fonte completo da plataforma não é duplicado neste repositório.
