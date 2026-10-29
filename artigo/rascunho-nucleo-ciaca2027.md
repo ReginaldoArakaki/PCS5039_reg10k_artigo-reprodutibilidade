@@ -20,7 +20,7 @@ O estudo combina três estratégias. A primeira é Design Science, paradigma no 
 
 O objeto de estudo é uma automação residencial de iluminação que evolui por incrementos. A V0 contém uma sala, uma porta, sensores, atuador, morador e cachorro. A V1 acrescenta uma cozinha ligada à sala por um vão e passa a exigir inferência entre cômodos. A V2 amplia a planta para quatro cômodos. As três versões possuem Digital Twin local e remoto e um espelho usado para avaliar a fidelidade da representação. A v1dt.1, planejada como incremento seguinte, mantém a planta da V1 e altera a população: inclui mais moradores, criança, idoso, visitante e ocupante dormindo. Assim, a variável principal deixa de ser apenas a topologia e passa a incluir comportamento não diretamente observável.
 
-As versões observadas foram congeladas nas tags `v0dtb`, `v1dtc` e `v2dta`. Todas usam o núcleo `nucleo-v1.2`, no commit `c7e8b05`, o que reduz a possibilidade de atribuir ao ambiente uma diferença introduzida pelo motor. A v1dt.1 depende do núcleo `nucleo-v1.3` e permanece fora dos resultados até que sua implementação, tag, manifesto e massa de execução estejam publicados.
+As versões observadas foram congeladas nas tags `v0dtb`, `v1dtc` e `v2dta`. Todas usam o núcleo `nucleo-v1.2`, no commit `c7e8b05`, o que reduz a possibilidade de atribuir ao ambiente uma diferença introduzida pelo motor. Código, cenários e dados dessas versões são publicados em repositórios Git independentes e identificados por tags imutáveis (Arakaki, 2026a). A v1dt.1 depende do núcleo `nucleo-v1.3` e permanece fora dos resultados até que sua implementação, tag, manifesto e massa de execução estejam publicados.
 
 ### 3.2 Unidade experimental e protocolo
 
@@ -93,6 +93,10 @@ O padrão comum é evento → processamento → Digital Twin → ação. Nos pro
 A implementação separa núcleo e repositórios de versão. O núcleo contém simulador, Hub, canal com a plataforma, modelos do Digital Twin, avaliação, gerador de cenários, comparador e catálogo. Cada versão contém planta, roteiros, resultados esperados, controladores, documentação e dados da rodada. O vínculo com o núcleo é registrado como submódulo, o que permite usar o mesmo motor e conservar a identidade do experimento.
 
 Os artefatos de entrada são JSON validados por esquemas. Cada execução produz requisitos e invariantes, métricas operacionais e medidas do gêmeo. O manifesto relaciona o CSV às entradas e ao código que o produziu. A base longitudinal foi construída a partir das tags publicadas, e não de diretórios de trabalho. Ela contém 5.580 execuções, 1.212 resumos dinâmicos por versão, controlador, família e métrica, além das métricas estáticas obtidas da árvore Git.
+
+Os repositórios constituem parte da evidência. O núcleo está publicado em `PCS5039_ambiente_reg10k_vCl0`, tag `nucleo-v1.2`, commit `c7e8b05`. As massas observadas estão em `PCS5039_ambiente_reg10k_V0`, tag `v0dtb`, commit `4041399`; `PCS5039_ambiente_reg10k_V1`, tag `v1dtc`, commit `9b58a1c`; e `PCS5039_ambiente_reg10k_V2`, tag `v2dta`, commit `17578dd` (Arakaki, 2026a). A identificação simultânea de repositório, tag e commit permite reconstruir a configuração mesmo que o ramo principal continue evoluindo.
+
+Um segundo repositório reúne o pacote de reprodutibilidade do artigo: scripts de coleta e análise, banco SQLite, CSVs derivados, planilha, protocolo, testes e os documentos do manuscrito (Arakaki, 2026b). A referência é distinta da implementação porque possui finalidade e ciclo de vida próprios. O primeiro conjunto executa os experimentos; o segundo preserva a seleção, transformação e interpretação das evidências usadas no artigo.
 
 | Versão | Tag | Cômodos | Cenários | Execuções | Estado |
 |---|---|---:|---:|---:|---|
