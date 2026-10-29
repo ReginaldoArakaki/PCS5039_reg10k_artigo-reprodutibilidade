@@ -138,11 +138,34 @@ O protocolo transforma uma decisão arquitetural em evidência por uma cadeia ra
 
 Os cenários de destaque incluem N01, fluxo normal; FN01, falso negativo por imobilidade; DT05, partição de rede; DT08, decomposição entre percepção e sincronização; M01 e M12, circulação multiambiente; M05, falso negativo multiambiente; e M14, passagem sem direção observável. Eles exercitam reação, conforto, desperdício, ocupação desconhecida, atualidade, fila, reconciliação e fidelidade topológica.
 
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.96\linewidth]{images/tela-catalogo-cenarios.png}
+\caption{Catálogo e seleção de cenários do simulador Reg10k. Os cards e a tabela relacionam versão, família, provocação, controlador, roteiro e requisitos, permitindo repetir uma situação sob configurações comparáveis.}
+\label{fig:tela-cenarios}
+\end{figure}
+
 A análise usa semente mestre 5039 e 5.000 reamostragens. O manifesto registra 5.580 execuções, 2.790 pares e os derivados de atendimento, discordâncias, comparações contínuas, semântica de nulos e zeros e resumos por família. Planejamento e observação ficam separados para impedir que a v1dt.1 seja contada antes da execução.
 
 \subsection{Roteiro de navegação e inspeção do sistema}
 
 A navegação liga o efeito visível à causa técnica. O painel inicial apresenta cards de cenários; a seleção abre roteiro, planta e controlador. Durante a execução, o observador acompanha mundo simulado, percepção do Hub, Digital Twin remoto, espelho, linha do tempo e métricas. Fragmentos de rota permitem retornar à mesma evidência, por exemplo \texttt{\#cenarios/N01/referencia}.
+
+\begin{figure}[ht]
+\centering
+\begin{minipage}[t]{0.49\linewidth}
+\centering
+\includegraphics[width=\linewidth]{images/tela-animacao-n01.png}\\[-0.2ex]
+\small (a) Animação, estado físico e representações digitais.
+\end{minipage}\hfill
+\begin{minipage}[t]{0.49\linewidth}
+\centering
+\includegraphics[width=\linewidth]{images/tela-painel-n01.png}\\[-0.2ex]
+\small (b) Linha do tempo, métricas e verificações.
+\end{minipage}
+\caption{Inspeção do cenário N01 com controlador de referência e semente 42. A animação separa mundo, percepção do Hub e estado remoto; o painel liga os eventos às métricas de energia, conforto, atualidade e fidelidade.}
+\label{fig:telas-inspecao}
+\end{figure}
 
 \begin{table}[ht]
 \centering
