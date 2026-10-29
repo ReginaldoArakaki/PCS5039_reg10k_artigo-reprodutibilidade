@@ -7,6 +7,13 @@ A consolidação técnica completa encontra-se em
 `artigo/protocolo-experimental.md`; tabelas finais são produzidas em
 `resultados/tabelas/`.
 
+O artigo para o CIACA 2027 está sendo preparado em dois documentos de trabalho:
+
+- `artigo/esqueleto-argumentativo-ciaca2027.md`: tese, perguntas, contribuições
+  e orçamento editorial;
+- `artigo/rascunho-nucleo-ciaca2027.md`: redação das seções de método,
+  evolução arquitetural, implementação e resultados.
+
 ## Questão de pesquisa
 
 Como evoluem complexidade arquitetural, verificabilidade e qualidade observável
