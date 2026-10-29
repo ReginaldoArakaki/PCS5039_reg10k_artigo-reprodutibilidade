@@ -222,4 +222,113 @@ A contribuição educacional é um caminho reproduzível para discutir decisões
 \bibitem[Tao et al.(2019)]{tao2019} TAO, F. et al. Digital Twins and cyber--physical systems toward smart manufacturing and Industry 4.0: correlation and comparison. \textit{IEEE Transactions on Industrial Informatics}, v. 15, n. 4, p. 2405--2415, 2019. DOI: \href{https://doi.org/10.1109/TII.2018.2873186}{10.1109/TII.2018.2873186}.
 \bibitem[Wilkinson et al.(2016)]{wilkinson2016} WILKINSON, M. et al. The FAIR Guiding Principles for scientific data management and stewardship. \textit{Scientific Data}, v. 3, art. 160018, 2016. DOI: \href{https://doi.org/10.1038/sdata.2016.18}{10.1038/sdata.2016.18}.
 \end{thebibliography}
+
+\clearpage
+\appendix
+\section{Arquitetura e configuração da implementação}
+
+Este apêndice registra elementos suficientes para relacionar a argumentação do artigo à implementação publicada. A residência e a borda preservam as funções essenciais durante indisponibilidade da plataforma; sensores de passagem e presença produzem eventos, o motor local mantém regras e estados, a persistência sustenta fila e recuperação e os atuadores executam a decisão. A plataforma registra residências e gêmeos, ingere telemetria, oferece operação e aplica governança. Eventos seguem da borda para a plataforma; configuração e comandos percorrem o sentido inverso (Figura~\ref{fig:ap-arquitetura}).
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.90\linewidth]{images/apendice-arquitetura-v1.png}
+\caption{Arquitetura de referência da V1: autonomia na borda e supervisão na plataforma.}
+\label{fig:ap-arquitetura}
+\end{figure}
+
+\begin{table}[ht]
+\centering
+\caption{Objetos principais da implementação e evidência associada.}
+\small
+\begin{tabularx}{\linewidth}{p{2.7cm}p{3.3cm}X}
+\toprule
+Objeto & Responsabilidade & Evidência reprodutível \\
+\midrule
+Planta e dispositivos & topologia, sensores e atuadores & JSON validado por esquema \\
+Roteiro & eventos, tempos e resultado esperado & cenário identificado por família e código \\
+Controlador & decisão local de iluminação & referência ou grupo-exemplo \\
+Hub e fila & estado percebido, autonomia e recuperação & métricas de percepção, entrega e reconciliação \\
+Digital Twin & estado remoto e atualidade & divergência, fidelidade e idade do estado \\
+Manifesto & proveniência da rodada & tags, commits, sementes e hashes SHA-256 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+As versões observadas permanecem resolvíveis por \texttt{v0dtb}, \texttt{v1dtc} e \texttt{v2dta}; o núcleo comum é \texttt{nucleo-v1.2}, commit \texttt{c7e8b05}. Essa separação permite evoluir a interface e os cenários sem apagar a configuração experimental usada no artigo.
+
+\clearpage
+\section{Cenários, métricas e cadeia de evidências}
+
+O protocolo transforma uma decisão arquitetural em evidência por uma cadeia rastreável: motivação, processo, capacidade, requisito, pacote de implementação, teste e resultado de aceite (Figura~\ref{fig:ap-rastreabilidade}). A unidade de análise não é a tela isolada nem um log sem contexto, mas a combinação versionada entre cenário, controlador e semente.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.92\linewidth]{images/apendice-rastreabilidade.png}
+\caption{Cadeia de rastreabilidade entre decisão, implementação, teste e evidência.}
+\label{fig:ap-rastreabilidade}
+\end{figure}
+
+\begin{table}[ht]
+\centering
+\caption{Cenários de destaque para inspeção e reprodução.}
+\small
+\begin{tabularx}{\linewidth}{p{1.3cm}p{4.5cm}X}
+\toprule
+Código & Provocação & Medidas de interesse \\
+\midrule
+N01 & entrada e saída normais & reação, conforto e desperdício \\
+FN01 & imobilidade do ocupante & falso negativo e apagamento indevido \\
+DT05 & partição de rede e abstenção honesta & atualidade, fila e reconciliação \\
+DT08 & canal realista e decomposição causal & percepção versus sincronização \\
+M01 & circulação sala--cozinha & transição espacial e dupla ativação \\
+M05 & falso negativo multiambiente & ocupação desconhecida e escuro \\
+M12 & fluxo multiambiente com gêmeo & fidelidade topológica \\
+M14 & passagem sem direção observável & ambiguidade e revisão de hipótese \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+A análise foi executada com semente mestre 5039 e 5.000 reamostragens. O manifesto registra 5.580 execuções, 2.790 pares e os arquivos derivados de taxas de atendimento, discordâncias, comparações contínuas, semântica de nulos e zeros e resumos por família. Planejamento e observação ficam em tabelas distintas para impedir que a v1dt.1 seja contada antes da execução.
+
+\clearpage
+\section{Roteiro de navegação e inspeção do sistema}
+
+A navegação foi construída para ligar o efeito visível à causa técnica. O painel inicial apresenta cards de cenários; a seleção abre a visão do roteiro, da planta e do controlador. Durante a execução, o observador acompanha mundo simulado, percepção do Hub, Digital Twin remoto, espelho, linha do tempo e métricas. Os fragmentos de rota permitem retornar diretamente à mesma evidência, por exemplo \texttt{\#cenarios/N01/referencia}.
+
+\begin{table}[ht]
+\centering
+\caption{Sequência recomendada de inspeção na interface.}
+\small
+\begin{tabularx}{\linewidth}{p{0.8cm}p{3.2cm}X p{3.0cm}}
+\toprule
+Etapa & Região da navegação & Pergunta orientadora & Evidência observada \\
+\midrule
+1 & cards de cenários & qual fenômeno será provocado? & família, código e objetivo \\
+2 & planta e roteiro & o que ocorre no mundo físico? & posição, passagem, presença e ação \\
+3 & estados do Hub & o que foi percebido localmente? & ocupação inferida e confiança \\
+4 & gêmeo e espelho & o remoto representa o mundo? & atualidade, divergência e fidelidade \\
+5 & linha do tempo & qual evento causou a decisão? & ordem, janela e correlação \\
+6 & painel de métricas & qual compromisso foi produzido? & energia, conforto, latência e erros \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{table}[ht]
+\centering
+\caption{Trechos de navegação sugeridos para demonstração.}
+\small
+\begin{tabularx}{\linewidth}{p{2cm}p{4cm}X}
+\toprule
+Trecho & Rota & Finalidade \\
+\midrule
+Normal & \texttt{\#cenarios/N01/referencia} & estabelecer a leitura da interface e a linha de base \\
+Imobilidade & \texttt{\#cenarios/FN01/referencia} & observar falso negativo e limite sensorial \\
+Rede & \texttt{\#cenarios/DT05/referencia} & acompanhar fila, abstenção e reconciliação \\
+Ambiguidade & \texttt{\#cenarios/M14/referencia} & discutir ausência de direção e revisão do estado \\
+Comparação & mesmas rotas com grupo-exemplo & localizar diferenças sem mudar cenário e semente \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+O roteiro evita interpretar a animação como evidência suficiente. Uma conclusão somente é aceita quando a sequência visível concorda com requisitos, invariantes, métricas e manifesto. Capturas de tela podem ser substituídas na versão final por imagens da tag escolhida para submissão, sem alterar o protocolo ou os resultados numéricos.
 \end{document}
