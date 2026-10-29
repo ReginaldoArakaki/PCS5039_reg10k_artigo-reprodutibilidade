@@ -1,0 +1,11 @@
+﻿id,nome,escopo,metricas,finalidade,prioridade
+E01,Escalabilidade espacial,V0→V1→V2,"Normalizar eventos, desperdício e erro por cômodo e por minuto ocupado",Mantém comparabilidade ao aumentar a planta,alta
+E02,Robustez por família,F1–F7,Taxas de requisitos/invariantes e distribuição das métricas por família,Localiza em qual mecanismo surge a degradação,alta
+E03,Comparação pareada de controlador,referência × grupo_exemplo,"Diferença por cenário e semente, com IC por bootstrap",Reduz efeito da massa de teste desigual,alta
+E04,Ocupação múltipla,v1dt.1 / F8,FN de ocupação após saída parcial; desperdício por ocupante-minuto,Testa 'um sai e outro fica',alta
+E05,Sono versus permanência,v1dt.1 / F9,escuro acordado × luz com todos dormindo,Expõe compromisso não observável pelo sensor,alta
+E06,Presença incompatível,v1dt.1 / F10,"precisão, revocação, tempo de confirmação e conciliações",Avalia inteligência no Hub sem rotular invasão,alta
+E07,Sensibilidade temporal,timeouts e atrasos,"Curvas de resposta variando timeout PIR, atraso de SA e janela de reconciliação",Mostra robustez das decisões de projeto,média
+E08,Resiliência de rede,IDEAL/DEGRADADA/OFFLINE,"AUC de divergência, fila máxima, perda e tempo de reconciliação",Evidencia valor do Digital Twin sob desconexão,alta
+E09,Fidelidade do gêmeo,percepção/sincronização,Decompor erro total em percepção e sincronização por família,Separa limitação sensorial de conectividade,alta
+E10,Repetibilidade,30 sementes,"CV, IC95 e estabilidade de ranking",Demonstra suficiência ou necessidade de mais sementes,alta

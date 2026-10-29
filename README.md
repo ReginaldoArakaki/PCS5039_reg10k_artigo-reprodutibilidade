@@ -13,6 +13,15 @@ residência multiambiente e inteligência comportamental no Hub.
 - correlação exploratória entre taxa de erro de percepção e tempo no escuro;
 - tabelas derivadas de dados e commits identificáveis.
 
+## Base longitudinal PCS5039
+
+A base `dados/evolucao/reg10k-evolucao.sqlite` consolida as versões publicadas
+V0/v0dtb, V1/v1dtc e V2/v2dta: 5.580 execuções, métricas estáticas por tag,
+sínteses dinâmicas por versão/controlador/família e proveniência com SHA-256.
+A especificação v1dt.1 aparece separadamente como marco planejado, sem ser
+confundida com evidência observada. A planilha em `outputs/evolucao-reg10k-20261029/`
+é a visão de leitura da mesma base.
+
 ## Reprodução rápida
 
 ```powershell
@@ -20,6 +29,7 @@ python -m pip install -r requirements.txt
 python scripts/coletar.py --repo ..\reg10k-v0dtb
 python scripts/analisar.py --catalogo ..\reg10k-v0dtb\saida\catalogo.json
 python scripts/gerar_resultados.py
+python scripts/construir_base_evolucao.py --repos <diretorio-dos-clones> --plano <ambiente-simulacao-v1dt.1.md> --sincronismo <sincronismo.xlsx> --saida dados/evolucao
 python -m pytest -q
 ```
 
