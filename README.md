@@ -16,11 +16,12 @@ residência multiambiente e inteligência comportamental no Hub.
 ## Base longitudinal PCS5039
 
 A base `dados/evolucao/reg10k-evolucao.sqlite` consolida as versões publicadas
-V0/v0dtb, V1/v1dtc e V2/v2dta: 5.580 execuções, métricas estáticas por tag,
-sínteses dinâmicas por versão/controlador/família e proveniência com SHA-256.
-A especificação v1dt.1 aparece separadamente como marco planejado, sem ser
-confundida com evidência observada. A planilha em `outputs/evolucao-reg10k-20261029/`
-é a visão de leitura da mesma base.
+V0/v0dtc, V1/v1dt.1, V2/v2dtb e V3/v3dt: 10.500 execuções, 5.250 pares,
+métricas estáticas por tag, sínteses dinâmicas por versão/controlador/família e
+proveniência com SHA-256. As famílias F8--F10 são evidência comportamental
+observada; o aprendizado da v3dt.1/nucleo-v1.4 aparece separadamente como marco
+planejado. A fotografia anterior foi preservada em
+`dados/evolucao/reg10k-evolucao-v0-v2.sqlite`.
 
 ## Reprodução rápida
 
@@ -29,7 +30,7 @@ python -m pip install -r requirements.txt
 python scripts/coletar.py --repo ..\reg10k-v0dtb
 python scripts/analisar.py --catalogo ..\reg10k-v0dtb\saida\catalogo.json
 python scripts/gerar_resultados.py
-python scripts/construir_base_evolucao.py --repos <diretorio-dos-clones> --plano <ambiente-simulacao-v1dt.1.md> --sincronismo <sincronismo.xlsx> --saida dados/evolucao
+python scripts/construir_base_evolucao.py --repos <diretorio-dos-clones> --plano <plano-v3dt.1.md> --sincronismo <sincronismo.xlsx> --saida dados/evolucao
 python scripts/analisar_evidencias_ciaca.py --base dados/evolucao/reg10k-evolucao.sqlite --saida dados/evolucao/analise-ciaca --bootstrap 5000 --semente 5039
 python scripts/gerar_figuras_tabelas_ciaca.py --analise dados/evolucao/analise-ciaca --saida resultados/ciaca2027
 python -m pytest -q

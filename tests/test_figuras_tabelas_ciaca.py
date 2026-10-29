@@ -16,10 +16,10 @@ def test_figuras_publicadas_em_vetor_e_raster():
 
 def test_tabelas_conservam_resultados_auditados():
     md = (OUT / "tabelas-ciaca2027.md").read_text(encoding="utf-8")
-    assert "5.580 execuções; 2.790 pares" in md
-    assert "desperdício −12,37 s" in md
-    assert "escuro +1,41 s" in md
-    assert "| V2 | v2dta | 17578dd | 4 | 29 | 1740 | 100.00 | 68.05 |" in md
+    assert "10.500 execuções; 5.250 pares" in md
+    assert "desperdício −7,98 s" in md
+    assert "escuro +1,82 s" in md
+    assert "| V3 | v3dt | 13b6200 | 7 | 60 | 3600 | 100.00 | 66.72 |" in md
 
 
 def test_tabelas_latex_estao_prontas_para_booktabs():
@@ -27,4 +27,4 @@ def test_tabelas_latex_estao_prontas_para_booktabs():
     assert tex.count("\\begin{table}") == 3
     assert tex.count("\\toprule") == 3
     assert tex.count("\\bottomrule") == 3
-    assert "$-$12,37" in tex
+    assert "$-$7,98" in tex

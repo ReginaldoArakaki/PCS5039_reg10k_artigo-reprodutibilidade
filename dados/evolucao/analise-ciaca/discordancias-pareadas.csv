@@ -1,4 +1,5 @@
 ﻿versao,n_pares,ambos_ok,somente_referencia_ok,somente_grupo_ok,nenhum_ok,saldo_referencia
-V0,1140,1140,0,0,0,0
-V1,780,701,78,0,1,78
-V2,870,592,278,0,0,278
+V0,1200,1200,0,0,0,0
+V1,1140,1001,138,0,1,138
+V2,1110,742,368,0,0,368
+V3,1800,1201,599,0,0,599

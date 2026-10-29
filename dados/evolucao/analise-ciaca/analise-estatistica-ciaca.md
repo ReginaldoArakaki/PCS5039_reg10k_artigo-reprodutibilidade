@@ -8,20 +8,23 @@
 
 | Versão | Controlador | n | Requisitos (%) | Invariantes (%) |
 |---|---|---:|---:|---:|
-| V0 | referencia | 1140 | 100,00 | 100,00 |
-| V0 | grupo_exemplo | 1140 | 100,00 | 100,00 |
-| V1 | referencia | 780 | 99,87 | 100,00 |
-| V1 | grupo_exemplo | 780 | 89,87 | 100,00 |
-| V2 | referencia | 870 | 100,00 | 100,00 |
-| V2 | grupo_exemplo | 870 | 68,05 | 100,00 |
+| V0 | referencia | 1200 | 100,00 | 100,00 |
+| V0 | grupo_exemplo | 1200 | 100,00 | 100,00 |
+| V1 | referencia | 1140 | 99,91 | 100,00 |
+| V1 | grupo_exemplo | 1140 | 87,81 | 100,00 |
+| V2 | referencia | 1110 | 100,00 | 100,00 |
+| V2 | grupo_exemplo | 1110 | 66,85 | 100,00 |
+| V3 | referencia | 1800 | 100,00 | 100,00 |
+| V3 | grupo_exemplo | 1800 | 66,72 | 100,00 |
 
 ## Discordâncias pareadas de requisitos
 
 | Versão | Pares | Ambos OK | Só referência OK | Só grupo OK | Nenhum OK | Saldo referência |
 |---|---:|---:|---:|---:|---:|---:|
-| V0 | 1140 | 1140 | 0 | 0 | 0 | 0 |
-| V1 | 780 | 701 | 78 | 0 | 1 | 78 |
-| V2 | 870 | 592 | 278 | 0 | 0 | 278 |
+| V0 | 1200 | 1200 | 0 | 0 | 0 | 0 |
+| V1 | 1140 | 1001 | 138 | 0 | 1 | 138 |
+| V2 | 1110 | 742 | 368 | 0 | 0 | 368 |
+| V3 | 1800 | 1201 | 599 | 0 | 0 | 599 |
 
 O saldo não é um teste de superioridade geral: as versões possuem conjuntos de cenários diferentes. Ele localiza discordâncias dentro da mesma execução pareada.
 
@@ -31,21 +34,26 @@ Diferença = grupo_exemplo − referência. Intervalos que atravessam zero não 
 
 | Versão | Métrica | Pares | Cenários | Dif. média | IC95 por cenário |
 |---|---|---:|---:|---:|---:|
-| V0 | desperdicio_s | 1140 | 38 | -3,16 | [-7,89; 0,00] |
-| V0 | escuro_com_ocupante_s | 1140 | 38 | 0,47 | [0,28; 0,75] |
-| V0 | gemeo_nao_atual_s | 1140 | 38 | 0,00 | [0,00; 0,00] |
-| V0 | espelho_fiel_pct | 1140 | 38 | -0,09 | [-0,12; -0,06] |
-| V0 | erro_de_percepcao_s | 1140 | 38 | -3,07 | [-7,91; 0,21] |
-| V1 | desperdicio_s | 780 | 26 | -4,62 | [-11,54; 0,00] |
-| V1 | escuro_com_ocupante_s | 780 | 26 | 1,30 | [0,95; 1,64] |
-| V1 | gemeo_nao_atual_s | 780 | 26 | 0,00 | [0,00; 0,00] |
-| V1 | espelho_fiel_pct | 780 | 26 | -0,21 | [-0,27; -0,15] |
-| V1 | erro_de_percepcao_s | 780 | 26 | -4,47 | [-11,45; 0,23] |
-| V2 | desperdicio_s | 870 | 29 | -12,37 | [-26,75; -2,07] |
-| V2 | escuro_com_ocupante_s | 870 | 29 | 1,41 | [1,02; 1,85] |
-| V2 | gemeo_nao_atual_s | 870 | 29 | 0,00 | [0,00; 0,00] |
-| V2 | espelho_fiel_pct | 870 | 29 | -0,08 | [-0,11; -0,06] |
-| V2 | erro_de_percepcao_s | 870 | 29 | -12,25 | [-28,59; -1,91] |
+| V0 | desperdicio_s | 1200 | 40 | -3,00 | [-7,50; 0,00] |
+| V0 | escuro_com_ocupante_s | 1200 | 40 | 0,46 | [0,29; 0,74] |
+| V0 | gemeo_nao_atual_s | 1200 | 40 | 0,00 | [0,00; 0,00] |
+| V0 | espelho_fiel_pct | 1200 | 40 | -0,09 | [-0,12; -0,06] |
+| V0 | erro_de_percepcao_s | 1200 | 40 | -2,91 | [-7,51; 0,20] |
+| V1 | desperdicio_s | 1140 | 38 | -3,16 | [-7,89; 0,00] |
+| V1 | escuro_com_ocupante_s | 1140 | 38 | 1,22 | [0,95; 1,49] |
+| V1 | gemeo_nao_atual_s | 1140 | 38 | 0,00 | [0,00; 0,00] |
+| V1 | espelho_fiel_pct | 1140 | 38 | -0,18 | [-0,23; -0,13] |
+| V1 | erro_de_percepcao_s | 1140 | 38 | -3,02 | [-7,80; 0,20] |
+| V2 | desperdicio_s | 1110 | 37 | -9,69 | [-21,01; -1,62] |
+| V2 | escuro_com_ocupante_s | 1110 | 37 | 1,50 | [1,14; 1,88] |
+| V2 | gemeo_nao_atual_s | 1110 | 37 | 0,00 | [0,00; 0,00] |
+| V2 | espelho_fiel_pct | 1110 | 37 | -0,09 | [-0,11; -0,06] |
+| V2 | erro_de_percepcao_s | 1110 | 37 | -9,52 | [-20,88; -1,39] |
+| V3 | desperdicio_s | 1800 | 60 | -7,98 | [-15,93; -2,00] |
+| V3 | escuro_com_ocupante_s | 1800 | 60 | 1,82 | [1,47; 2,16] |
+| V3 | gemeo_nao_atual_s | 1800 | 60 | 0,00 | [0,00; 0,00] |
+| V3 | espelho_fiel_pct | 1800 | 60 | -0,06 | [-0,07; -0,04] |
+| V3 | erro_de_percepcao_s | 1800 | 60 | -7,68 | [-15,61; -1,74] |
 
 ## Nulos e zeros
 

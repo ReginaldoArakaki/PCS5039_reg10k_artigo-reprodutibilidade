@@ -34,7 +34,7 @@
 \vspace{-1.2cm}
 
 \begin{abstract}
-Este artigo apresenta a evolução de um kit de automação residencial de iluminação para um laboratório reproduzível de arquitetura IoT orientada a eventos e integrado a Digital Twins. O artefato foi empregado na disciplina de pós-graduação PCS5039 para provocar decisões sobre percepção, conectividade, estado, comportamento e qualidade arquitetural. Três versões observadas ampliam o ambiente de um para quatro cômodos; uma quarta, planejada, desloca o foco para ocupação múltipla e intenção. O protocolo reúne 5.580 execuções, 2.790 pares controlador--cenário--semente, sete famílias de cenários e medidas de requisitos, energia, conforto, atualidade e fidelidade do gêmeo. Na V2, o controlador alternativo reduz desperdício em 12,37 s (IC95: $-26{,}75$; $-2{,}07$), mas aumenta o tempo no escuro com ocupante em 1,41 s (IC95: 1,02; 1,85). O erro de percepção domina o erro de sincronização no modelo simulado. Código, versões, massas e análises são identificados por repositório, tag, commit e manifesto. A contribuição é um instrumento de ensino e experimentação que torna explícito o percurso entre automação local, processamento de eventos, representação digital e serviços de plataforma, sem confundir viabilidade técnica com evidência causal de aprendizagem.
+Este artigo apresenta a evolução de um kit de automação residencial de iluminação para um laboratório reproduzível de arquitetura IoT orientada a eventos e integrado a Digital Twins. O artefato foi empregado na disciplina de pós-graduação PCS5039 para provocar decisões sobre percepção, conectividade, estado, comportamento e qualidade arquitetural. Quatro versões observadas ampliam o ambiente de um para sete cômodos e introduzem ocupação múltipla, sono e presença incompatível. O protocolo reúne 10.500 execuções, 5.250 pares controlador--cenário--semente, dez famílias de cenários e medidas de requisitos, energia, conforto, atualidade e fidelidade do gêmeo. Na V3, o controlador alternativo reduz desperdício em 7,98 s (IC95: $-15{,}93$; $-2{,}00$), mas aumenta o tempo no escuro com ocupante em 1,82 s (IC95: 1,47; 2,16). O erro de percepção domina o erro de sincronização no modelo simulado. Código, versões, massas e análises são identificados por repositório, tag, commit e manifesto. A contribuição é um instrumento de ensino e experimentação que torna explícito o percurso entre automação local, processamento de eventos, representação digital e serviços de plataforma. O aprendizado comportamental permanece como evolução planejada, sem ser confundido com a representação comportamental já observada.
 
 \textbf{Palavras-chave:} Internet das Coisas; Digital Twin; processamento de eventos complexos; arquitetura de sistemas; ensino de engenharia de software; reprodutibilidade.
 \end{abstract}
@@ -45,7 +45,7 @@ Uma automação de iluminação pode parecer um problema encerrado: detectar pre
 
 Essas perguntas motivaram a evolução do Reg10k, kit usado como exemplo condutor da disciplina PCS5039 -- Engenharia de Software Orientada a IoT. O objetivo não foi antecipar uma plataforma comercial, mas criar uma sequência didática na qual cada incremento introduz capacidades, falhas e métricas observáveis. A automação isolada evolui para Hub, processamento de eventos, Digital Twin, plataforma e base experimental. O mesmo padrão foi depois reconhecido em projetos de monitoramento de pontes, apoio a idosos, CI/CD de hardware e software e veículos autônomos.
 
-O artigo investiga quatro questões: (RQ1) como organizar a evolução incremental sem perder comparabilidade? (RQ2) que métricas evitam conclusões enganosas entre topologias distintas? (RQ3) que problemas o Digital Twin torna mensuráveis além do controle local? (RQ4) em que medida o kit apoia a transferência do raciocínio arquitetural a outros domínios? A contribuição combina artefato, protocolo e evidência: três versões publicadas, 5.580 execuções determinísticas, análise pareada e pacote de reprodutibilidade. As afirmações pedagógicas são limitadas à viabilidade e à transferência estrutural observada; não se reivindica ganho causal de aprendizagem.
+O artigo investiga quatro questões: (RQ1) como organizar a evolução incremental sem perder comparabilidade? (RQ2) que métricas evitam conclusões enganosas entre topologias distintas? (RQ3) que problemas o Digital Twin torna mensuráveis além do controle local? (RQ4) em que medida o kit apoia a transferência do raciocínio arquitetural a outros domínios? A contribuição combina artefato, protocolo e evidência: quatro versões publicadas, 10.500 execuções determinísticas, análise pareada e pacote de reprodutibilidade. As afirmações pedagógicas são limitadas à viabilidade e à transferência estrutural observada; não se reivindica ganho causal de aprendizagem.
 
 \section{Fundamentação e trabalhos relacionados}
 
@@ -73,11 +73,11 @@ O estudo combina Design Science, estudo de caso educacional e experimento comput
 
 \subsection{Objeto, unidade experimental e protocolo}
 
-A V0 possui uma sala, sensores, atuador, morador e cachorro. A V1 acrescenta cozinha e inferência entre cômodos. A V2 amplia a planta para quatro cômodos. As versões mantêm Digital Twin local, remoto e espelho de comparação. A v1dt.1, ainda planejada, conserva a planta da V1 e introduz múltiplos ocupantes, sono e intenção; não participa dos resultados observados.
+A V0 possui uma sala, sensores, atuador, morador e cachorro. A V1 acrescenta cozinha e inferência entre cômodos; sua tag v1dt.1 introduz múltiplos ocupantes, sono e presença incompatível. A V2 amplia a planta para quatro cômodos e a V3, para sete. As versões mantêm Digital Twin local, remoto e espelho de comparação. A futura v3dt.1 deverá usar o histórico para aprender perfis e produzir sugestões explicáveis com aceite; essa capacidade não participa dos resultados observados.
 
-Uma unidade experimental é a tupla versão $\times$ família $\times$ cenário $\times$ controlador $\times$ semente. Foram usadas 30 sementes e dois controladores: referência e grupo-exemplo. A V0 contém 38 cenários e 2.280 execuções; V1, 26 e 1.560; V2, 29 e 1.740. As 5.580 execuções formam 2.790 pares. Sete famílias cobrem uso normal; permanência sem movimento e falsos negativos; passagem e falsos positivos; falhas de dispositivos; quedas de rede, plataforma ou Hub; comandos remotos; e espelho/consulta.
+Uma unidade experimental é a tupla versão $\times$ família $\times$ cenário $\times$ controlador $\times$ semente. Foram usadas 30 sementes e dois controladores: referência e grupo-exemplo. A V0 contém 40 cenários e 2.400 execuções; V1, 38 e 2.280; V2, 37 e 2.220; V3, 60 e 3.600. As 10.500 execuções formam 5.250 pares. Dez famílias cobrem uso normal; permanência sem movimento; falsos positivos; falhas; rede; comandos remotos; espelho; ocupação múltipla; sono; e presença incompatível.
 
-Cada rodada carrega planta, roteiro e controlador; executa a simulação determinística; verifica requisitos e invariantes; e registra métricas e proveniência. O manifesto contém versão, núcleo, commits, Python, sementes, controladores, entradas e hashes SHA-256. As versões observadas usam \texttt{nucleo-v1.2}, commit \texttt{c7e8b05}. Os CSVs são consolidados em SQLite, preservando cada execução.
+Cada rodada carrega planta, roteiro e controlador; executa a simulação determinística; verifica requisitos e invariantes; e registra métricas e proveniência. O manifesto contém versão, núcleo, commits, Python, sementes, controladores, entradas e hashes SHA-256. As versões observadas usam \texttt{nucleo-v1.3}, commit \texttt{7077d3c}. Os CSVs são consolidados em SQLite, preservando cada execução e rejeitando duplicidade da chave experimental.
 
 \subsection{Variáveis, análise e validade}
 
@@ -145,7 +145,7 @@ Os cenários de destaque incluem N01, fluxo normal; FN01, falso negativo por imo
 \label{fig:tela-cenarios}
 \end{figure}
 
-A análise usa semente mestre 5039 e 5.000 reamostragens. O manifesto registra 5.580 execuções, 2.790 pares e os derivados de atendimento, discordâncias, comparações contínuas, semântica de nulos e zeros e resumos por família. Planejamento e observação ficam separados para impedir que a v1dt.1 seja contada antes da execução.
+A análise usa semente mestre 5039 e 5.000 reamostragens. O manifesto registra 10.500 execuções, 5.250 pares e os derivados de atendimento, discordâncias, comparações contínuas, semântica de nulos e zeros e resumos por família. Planejamento e observação ficam separados para impedir que o aprendizado da v3dt.1 seja contado antes da execução.
 
 \subsection{Roteiro de navegação e inspeção do sistema}
 
@@ -198,14 +198,15 @@ O roteiro evita interpretar a animação como evidência suficiente. Uma conclus
 \toprule
 Versão & Tag & Cômodos & Cenários & Execuções & Req. ref./grupo (\%) \\
 \midrule
-V0 & \texttt{v0dtb} & 1 & 38 & 2.280 & 100,00/100,00 \\
-V1 & \texttt{v1dtc} & 2 & 26 & 1.560 & 99,87/89,87 \\
-V2 & \texttt{v2dta} & 4 & 29 & 1.740 & 100,00/68,05 \\
+V0 & \texttt{v0dtc} & 1 & 40 & 2.400 & 100,00/100,00 \\
+V1 & \texttt{v1dt.1} & 2 & 38 & 2.280 & 99,91/87,81 \\
+V2 & \texttt{v2dtb} & 4 & 37 & 2.220 & 100,00/66,85 \\
+V3 & \texttt{v3dt} & 7 & 60 & 3.600 & 100,00/66,72 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-O núcleo está congelado na tag \texttt{nucleo-v1.2}; as massas estão nas tags da Tabela~\ref{tab:versoes} \citep{reg10ksoftware}. Um repositório distinto preserva scripts, SQLite, CSVs derivados, planilha, testes e manuscrito \citep{reg10krepro}. A combinação repositório--tag--commit--hash permite reconstruir a configuração enquanto os ramos principais continuam evoluindo.
+O núcleo está congelado na tag \texttt{nucleo-v1.3}; as massas estão nas tags da Tabela~\ref{tab:versoes} \citep{reg10ksoftware}. Um repositório distinto preserva scripts, SQLite, CSVs derivados, planilha, testes e manuscrito \citep{reg10krepro}. A combinação repositório--tag--commit--hash permite reconstruir a configuração enquanto os ramos principais continuam evoluindo. Os manifestos registram que as rodadas foram geradas em árvores de trabalho ainda modificadas; por isso, os hashes publicados são preservados e uma rerrodada sobre checkouts limpos permanece como controle de proveniência.
 
 \section{Evolução da arquitetura com Gêmeo Digital}
 
@@ -227,7 +228,11 @@ A V2 expande a planta para quatro cômodos. Parâmetros variam por ambiente, a c
 
 \subsection{v1dt.1: ocupação, comportamento e intenção}
 
-A evolução planejada mantém a planta da V1 e altera a população. Múltiplos moradores, criança, idoso, visitante e cachorro produzem movimentos distintos, mas sensores não fornecem identidade ou intenção. Ler e dormir podem gerar a mesma ausência de movimento e demandar decisões opostas. O gêmeo deve representar incerteza, origem da evidência e possibilidade de revisão.
+A v1dt.1 mantém a planta da V1 e altera a população. Múltiplos moradores, criança, idoso, visitante e cachorro produzem movimentos distintos, mas sensores não fornecem identidade ou intenção. Ler e dormir podem gerar a mesma ausência de movimento e demandar decisões opostas. Os cenários F8--F10 observam ocupação múltipla, sono e presença incompatível; o gêmeo representa incerteza, origem da evidência e possibilidade de conciliação.
+
+\subsection{V3: escala espacial e comportamento observado}
+
+A V3 amplia a planta para sete cômodos e combina a escala espacial com as famílias F8 e F9. O ambiente passa a exercitar ocupantes simultâneos em regiões distantes e sono em diferentes cômodos. Essa etapa fornece evidência de um Digital Twin sensível ao comportamento, mas não de aprendizado: estados e regras foram especificados previamente.
 
 \begin{figure}[ht]
 \centering
@@ -239,6 +244,8 @@ A evolução planejada mantém a planta da V1 e altera a população. Múltiplos
 \subsection{Da residência conectada à plataforma}
 
 Quando residências são conectadas, eventos derivados podem apoiar recomendação energética, previsão de carga, identificação de falhas e alertas graduados. São possibilidades arquiteturais, não resultados deste experimento. Dependem de consentimento, qualidade, segurança, governança e modelos de responsabilidade.
+
+A evolução planejada v3dt.1 deverá fechar um novo ciclo: histórico local de 30 dias, perfil por cômodo e faixa horária, previsão ou sugestão explicável, aceite do morador, aplicação no Hub e avaliação do efeito sobre energia, conforto, calibração e deriva. Até que essa rodada seja publicada, o manuscrito distingue explicitamente comportamento observado de comportamento aprendido.
 
 \section{O laboratório na PCS5039}
 
@@ -267,19 +274,23 @@ Essa transferência é evidência de reutilização conceitual, não de efetivid
 
 \subsection{Cobertura e aumento de complexidade}
 
-Todos os 5.580 registros satisfizeram os invariantes avaliados. O controlador de referência atendeu aos requisitos em 100\%, 99,87\% e 100\% das execuções de V0, V1 e V2; o grupo-exemplo, em 100\%, 89,87\% e 68,05\%. Na V1, 701 pares tiveram ambos aprovados, 78 somente a referência e um ambos reprovados. Na V2, foram 592 pares com ambos aprovados e 278 somente referência; nenhum teve apenas o grupo aprovado. O aumento da topologia expôs limitações invisíveis no caso simples, enquanto a preservação de invariantes separou integridade do ambiente e adequação funcional.
+Todos os 10.500 registros satisfizeram os invariantes avaliados. O controlador de referência atendeu aos requisitos em 100\%, 99,91\%, 100\% e 100\% das execuções de V0 a V3; o grupo-exemplo, em 100\%, 87,81\%, 66,85\% e 66,72\%. Na V1, 1.001 pares tiveram ambos aprovados, 138 somente a referência e um ambos reprovados. Na V2, foram 742 pares com ambos aprovados e 368 somente referência; na V3, 1.201 e 599, respectivamente. Nenhum par teve somente o grupo aprovado. O aumento da topologia e das situações comportamentais expôs limitações invisíveis no caso simples, enquanto a preservação de invariantes separou integridade do ambiente e adequação funcional.
 
 \subsection{Escala, normalização e compromissos}
 
-No controlador de referência, a média de eventos por execução foi 1.073,13 na V0, 1.044,33 na V1 e 2.021,11 na V2. Por cômodo, tornou-se 1.073,13, 522,17 e 505,28. A queda normalizada não prova eficiência, pois versões diferem em cenários e famílias; demonstra que totais brutos confundem escala, cobertura e comportamento.
+No controlador de referência, a média de eventos por execução foi 1.075,48 na V0, 1.445,81 na V1, 2.389,10 na V2 e 3.808,74 na V3. Por cômodo, tornou-se 1.075,48, 722,90, 597,27 e 544,11. A queda normalizada não prova eficiência, pois versões diferem em cenários e famílias; demonstra que totais brutos confundem escala, cobertura e comportamento.
 
-O desperdício médio de referência cresceu de 56,61 s para 93,58 s e 155,23 s; por cômodo, caiu de 56,61 s para 46,79 s e 38,81 s. O tempo médio no escuro foi 105,84 s, 39,11 s e 45,30 s; por cômodo, 105,84 s, 19,56 s e 11,32 s. Medianas menores que médias indicam muitos casos sem ocorrência e poucos com cauda longa.
+O desperdício médio de referência foi 55,30 s, 81,34 s, 160,30 s e 154,27 s; por cômodo, 55,30 s, 40,67 s, 40,08 s e 22,04 s. O tempo médio no escuro foi 100,58 s, 57,97 s, 35,81 s e 43,21 s; por cômodo, 100,58 s, 28,99 s, 8,95 s e 6,17 s. Medianas menores que médias indicam muitos casos sem ocorrência e poucos com cauda longa.
 
-No pareamento da V2, o grupo reduziu desperdício em 12,37 s (IC95: $-26{,}75$; $-2{,}07$), mas aumentou o tempo no escuro com ocupante em 1,41 s (IC95: 1,02; 1,85) e reduziu a fidelidade em 0,08 ponto percentual (IC95: $-0{,}11$; $-0{,}06$). Portanto, existe compromisso entre energia, conforto e representação, e não superioridade geral.
+No pareamento da V3, o grupo reduziu desperdício em 7,98 s (IC95: $-15{,}93$; $-2{,}00$), mas aumentou o tempo no escuro com ocupante em 1,82 s (IC95: 1,47; 2,16) e reduziu a fidelidade em 0,06 ponto percentual (IC95: $-0{,}07$; $-0{,}04$). Portanto, existe compromisso entre energia, conforto e representação, e não superioridade geral.
 
 \subsection{Fidelidade do Digital Twin}
 
-A fidelidade média de referência foi 59,94\% na V0, 62,27\% na V1 e 55,92\% na V2. Como inclui cenários de falha e desconexão, não é uma nota global. O erro médio de percepção foi 127,68 s, 99,42 s e 175,08 s; o de sincronização, 0,016 s, 0,004 s e zero. Nos parâmetros simulados, a divergência decorre sobretudo do que o Hub infere, não do transporte até a plataforma. Conectar percepção incorreta apenas distribui o erro com maior rapidez.
+A fidelidade média de referência foi 59,94\% na V0, 64,14\% na V1, 58,64\% na V2 e 65,85\% na V3. Como inclui cenários de falha e desconexão, não é uma nota global. O erro médio de percepção foi 136,36 s, 179,81 s, 228,03 s e 237,99 s; o de sincronização, 0,015 s, 0,003 s e zero nas duas últimas versões. Nos parâmetros simulados, a divergência decorre sobretudo do que o Hub infere, não do transporte até a plataforma. Conectar percepção incorreta apenas distribui o erro com maior rapidez.
+
+\subsection{Comportamento observado e fronteira do aprendizado}
+
+As famílias comportamentais somam 60 execuções F8 e 60 F9 na V0; 180 F8, 180 F9 e 180 F10 na V1; 240 F8 e 240 F9 na V2; e 480 F8 e 420 F9 na V3. Todos os invariantes foram preservados. Na V1, as 180 execuções F10 atenderam aos requisitos e produziram 120 suspeitas abertas, 60 confirmadas e 60 conciliadas. Em F9, o controlador de referência atendeu aos requisitos, enquanto o grupo acumulou reprovações nas versões mais complexas. Esses resultados demonstram representação e avaliação de situações comportamentais. Não demonstram aprendizado, pois não existe ainda ajuste de modelo a partir do histórico nem comparação pré/pós-sugestão.
 
 \begin{table}[ht]
 \centering
@@ -290,10 +301,10 @@ A fidelidade média de referência foi 59,94\% na V0, 62,27\% na V1 e 55,92\% na
 \toprule
 Evidência & Interpretação & Limite \\
 \midrule
-5.580 execuções; 2.790 pares & protocolo executável e pareado & simulação, não campo \\
+10.500 execuções; 5.250 pares & protocolo executável e pareado & simulação, não campo \\
 100\% de invariantes & integridade estrutural preservada & invariantes disponíveis \\
-V2: desperdício $-12{,}37$ s & grupo usa menos luz no conjunto & cenários observados \\
-V2: escuro $+1{,}41$ s & troca energia por conforto & sem superioridade geral \\
+V3: desperdício $-7{,}98$ s & grupo usa menos luz no conjunto & cenários observados \\
+V3: escuro $+1{,}82$ s & troca energia por conforto & sem superioridade geral \\
 Percepção $\gg$ sincronização & limite sensorial domina o modelo & rede simulada \\
 Quatro domínios discentes & transferência do padrão & sem efeito causal \\
 \bottomrule
@@ -304,9 +315,9 @@ As respostas às RQs são parciais e delimitadas. Para RQ1, versões ligam capac
 
 \section{Conclusão}
 
-O Reg10k transforma uma automação de iluminação em laboratório de arquitetura orientada a eventos e Digital Twins. Seu valor não está na quantidade de dispositivos, mas na separação verificável entre mundo, percepção, sincronização e decisão. A progressão V0--V2 mostrou que complexidade espacial expõe falhas ocultas e que métricas brutas podem conduzir a interpretações inadequadas. O pareamento revelou compromissos entre desperdício, conforto e fidelidade; a decomposição do erro mostrou predominância da percepção no modelo.
+O Reg10k transforma uma automação de iluminação em laboratório de arquitetura orientada a eventos e Digital Twins. Seu valor não está na quantidade de dispositivos, mas na separação verificável entre mundo, percepção, sincronização e decisão. A progressão V0--V3 mostrou que complexidade espacial e comportamental expõe falhas ocultas e que métricas brutas podem conduzir a interpretações inadequadas. O pareamento revelou compromissos entre desperdício, conforto e fidelidade; a decomposição do erro mostrou predominância da percepção no modelo.
 
-A contribuição educacional é um caminho reproduzível para discutir decisões arquiteturais com evidência. O próximo experimento, v1dt.1, avaliará ocupação múltipla, sono, presença incompatível, precisão, revocação e conciliação. Estudos futuros devem executar o ambiente em campo, ampliar controladores e medir aprendizagem com instrumentos independentes. As referências autorais foram deliberadamente trianguladas com pelo menos duas fontes conceituais independentes por tema, reduzindo polarização e tornando explícita a linhagem teórica das escolhas.
+A contribuição educacional é um caminho reproduzível para discutir decisões arquiteturais com evidência. Ocupação múltipla, sono e presença incompatível já são observados; o próximo experimento, v3dt.1, deverá avaliar aprendizado longitudinal, sugestão explicável, aceite, calibração e deriva. Estudos futuros devem repetir as rodadas em tags limpas, executar o ambiente em campo, ampliar controladores e medir aprendizagem educacional com instrumentos independentes. As referências autorais foram deliberadamente trianguladas com pelo menos duas fontes conceituais independentes por tema, reduzindo polarização e tornando explícita a linhagem teórica das escolhas.
 
 \begin{thebibliography}{99}
 \small

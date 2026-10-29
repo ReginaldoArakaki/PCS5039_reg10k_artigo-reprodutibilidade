@@ -1,6 +1,6 @@
 ﻿id,nome,escopo,metricas,finalidade,prioridade
-E01,Escalabilidade espacial,V0→V1→V2,"Normalizar eventos, desperdício e erro por cômodo e por minuto ocupado",Mantém comparabilidade ao aumentar a planta,alta
-E02,Robustez por família,F1–F7,Taxas de requisitos/invariantes e distribuição das métricas por família,Localiza em qual mecanismo surge a degradação,alta
+E01,Escalabilidade espacial,V0→V1→V2→V3,"Normalizar eventos, desperdício e erro por cômodo e por minuto ocupado",Mantém comparabilidade ao aumentar a planta,alta
+E02,Robustez por família,F1–F10,Taxas de requisitos/invariantes e distribuição das métricas por família,Localiza em qual mecanismo surge a degradação,alta
 E03,Comparação pareada de controlador,referência × grupo_exemplo,"Diferença por cenário e semente, com IC por bootstrap",Reduz efeito da massa de teste desigual,alta
 E04,Ocupação múltipla,v1dt.1 / F8,FN de ocupação após saída parcial; desperdício por ocupante-minuto,Testa 'um sai e outro fica',alta
 E05,Sono versus permanência,v1dt.1 / F9,escuro acordado × luz com todos dormindo,Expõe compromisso não observável pelo sensor,alta

@@ -19,9 +19,10 @@ from pathlib import Path
 
 
 VERSOES = {
-    "V0": {"repo": "PCS5039_ambiente_reg10k_V0", "tag": "v0dtb", "estagio": "observado"},
-    "V1": {"repo": "PCS5039_ambiente_reg10k_V1", "tag": "v1dtc", "estagio": "observado"},
-    "V2": {"repo": "PCS5039_ambiente_reg10k_V2", "tag": "v2dta", "estagio": "observado"},
+    "V0": {"repo": "PCS5039_ambiente_reg10k_V0", "tag": "v0dtc", "dados": "experimentos-V0-20261029-v13", "estagio": "observado"},
+    "V1": {"repo": "PCS5039_ambiente_reg10k_V1", "tag": "v1dt.1", "dados": "experimentos-V1-20261029-v1dt1", "estagio": "observado"},
+    "V2": {"repo": "PCS5039_ambiente_reg10k_V2", "tag": "v2dtb", "dados": "experimentos-V2-20261029-v13", "estagio": "observado"},
+    "V3": {"repo": "PCS5039_ambiente_reg10k_V3", "tag": "v3dt", "dados": "experimentos-V3-20261029", "estagio": "observado"},
 }
 
 METRICAS_DINAMICAS = [
@@ -36,11 +37,13 @@ METRICAS_DINAMICAS = [
     "eventos_nao_entregues", "fila_max", "espelho_fiel_pct",
     "espelho_fiel_s", "erro_de_percepcao_s", "erro_de_sincronizacao_s",
     "espelho_nao_afirma_s",
+    "luz_com_todos_dormindo_s", "suspeitas_abertas",
+    "suspeitas_confirmadas", "suspeitas_conciliadas",
 ]
 
 EXPERIMENTOS_PROPOSTOS = [
-    ("E01", "Escalabilidade espacial", "V0→V1→V2", "Normalizar eventos, desperdício e erro por cômodo e por minuto ocupado", "Mantém comparabilidade ao aumentar a planta", "alta"),
-    ("E02", "Robustez por família", "F1–F7", "Taxas de requisitos/invariantes e distribuição das métricas por família", "Localiza em qual mecanismo surge a degradação", "alta"),
+    ("E01", "Escalabilidade espacial", "V0→V1→V2→V3", "Normalizar eventos, desperdício e erro por cômodo e por minuto ocupado", "Mantém comparabilidade ao aumentar a planta", "alta"),
+    ("E02", "Robustez por família", "F1–F10", "Taxas de requisitos/invariantes e distribuição das métricas por família", "Localiza em qual mecanismo surge a degradação", "alta"),
     ("E03", "Comparação pareada de controlador", "referência × grupo_exemplo", "Diferença por cenário e semente, com IC por bootstrap", "Reduz efeito da massa de teste desigual", "alta"),
     ("E04", "Ocupação múltipla", "v1dt.1 / F8", "FN de ocupação após saída parcial; desperdício por ocupante-minuto", "Testa 'um sai e outro fica'", "alta"),
     ("E05", "Sono versus permanência", "v1dt.1 / F9", "escuro acordado × luz com todos dormindo", "Expõe compromisso não observável pelo sensor", "alta"),
@@ -110,7 +113,7 @@ def criar_esquema(db: sqlite3.Connection):
     CREATE TABLE fonte (id INTEGER PRIMARY KEY, tipo TEXT, caminho_ou_url TEXT, sha256 TEXT, coletado_em TEXT, observacao TEXT);
     CREATE TABLE versao (id TEXT PRIMARY KEY, titulo TEXT, descricao TEXT, estagio TEXT, repositorio TEXT, tag TEXT, commit_tag TEXT, commit_main TEXT, nucleo_tag TEXT, nucleo_commit TEXT, n_comodos INTEGER, n_moradores INTEGER, n_cenarios INTEGER, n_familias INTEGER, n_sementes INTEGER, n_controladores INTEGER, n_execucoes INTEGER);
     CREATE TABLE metrica_estatica (versao_id TEXT, metrica TEXT, valor REAL, unidade TEXT, metodo TEXT, PRIMARY KEY (versao_id, metrica), FOREIGN KEY (versao_id) REFERENCES versao(id));
-    CREATE TABLE execucao (id INTEGER PRIMARY KEY, versao_id TEXT, familia TEXT, cenario TEXT, tipo TEXT, controlador TEXT, semente INTEGER, modo TEXT, modo_rede TEXT, requisitos_ok INTEGER, invariantes_ok INTEGER, n_comodos INTEGER, n_moradores INTEGER, metricas_json TEXT, FOREIGN KEY (versao_id) REFERENCES versao(id));
+    CREATE TABLE execucao (id INTEGER PRIMARY KEY, versao_id TEXT, familia TEXT, cenario TEXT, tipo TEXT, controlador TEXT, semente INTEGER, modo TEXT, modo_rede TEXT, requisitos_ok INTEGER, invariantes_ok INTEGER, n_comodos INTEGER, n_moradores INTEGER, metricas_json TEXT, UNIQUE (versao_id, familia, cenario, controlador, semente), FOREIGN KEY (versao_id) REFERENCES versao(id));
     CREATE TABLE metrica_dinamica_resumo (versao_id TEXT, controlador TEXT, familia TEXT, metrica TEXT, n INTEGER, media REAL, mediana REAL, desvio_padrao REAL, minimo REAL, maximo REAL, media_por_comodo REAL, PRIMARY KEY (versao_id, controlador, familia, metrica));
     CREATE TABLE experimento_proposto (id TEXT PRIMARY KEY, nome TEXT, escopo TEXT, metricas TEXT, finalidade TEXT, prioridade TEXT, estado TEXT);
     CREATE TABLE marco_planejado (id TEXT PRIMARY KEY, base TEXT, estado TEXT, objetivo TEXT, ocupantes TEXT, familias_novas TEXT, metricas_novas TEXT, fonte_id INTEGER, FOREIGN KEY (fonte_id) REFERENCES fonte(id));
@@ -140,7 +143,7 @@ def main():
     criar_esquema(db)
     agora = datetime.now(timezone.utc).isoformat()
     fontes = [
-        ("especificacao", str(args.plano), sha256(args.plano), agora, "Plano v1dt.1; tratado como marco planejado"),
+        ("especificacao", str(args.plano), sha256(args.plano), agora, "Plano v3dt.1; aprendizado do gêmeo tratado como marco planejado"),
         ("planilha", str(args.sincronismo), sha256(args.sincronismo), agora, "Sincronismo informado; commits reconferidos nos clones"),
     ]
     db.executemany("INSERT INTO fonte(tipo,caminho_ou_url,sha256,coletado_em,observacao) VALUES (?,?,?,?,?)", fontes)
@@ -150,8 +153,8 @@ def main():
     versoes_csv = []
     for vid, cfg in VERSOES.items():
         repo = args.repos / cfg["repo"]
-        manifesto_path = repo / "dados" / f"experimentos-{vid}-20261029.manifesto.json"
-        csv_path = repo / "dados" / f"experimentos-{vid}-20261029.csv"
+        manifesto_path = repo / "dados" / f"{cfg['dados']}.manifesto.json"
+        csv_path = repo / "dados" / f"{cfg['dados']}.csv"
         manifesto = json.loads(manifesto_path.read_text(encoding="utf-8"))
         versao = json.loads((repo / "versao.json").read_text(encoding="utf-8"))
         commit_tag = git(repo, "rev-list", "-n", "1", cfg["tag"])
@@ -198,9 +201,9 @@ def main():
     db.executemany("INSERT INTO experimento_proposto VALUES (?,?,?,?,?,?,?)", [(*e, "proposto") for e in EXPERIMENTOS_PROPOSTOS])
     fonte_plano = db.execute("SELECT id FROM fonte WHERE tipo='especificacao'").fetchone()[0]
     db.execute("INSERT INTO marco_planejado VALUES (?,?,?,?,?,?,?,?)", (
-        "v1dt.1", "nucleo-v1.3", "planejado", "Ampliar ocupantes mantendo a planta da V1",
-        "morador, moradora, criança, idoso, Rex e visitante", "F8, F9 e F10",
-        "luz_com_todos_dormindo_s; precisão/recall de presença incompatível; tempo de confirmação; conciliações", fonte_plano))
+        "v3dt.1", "nucleo-v1.4", "planejado", "Aprender perfis comportamentais e produzir sugestões explicáveis com aceite",
+        "ocupantes e rotinas observados nas versões comportamentais", "aprendizado longitudinal e sugestões com aceite",
+        "calibração; precisão/recall; ganho energético; conforto; aceite; deriva; reversões", fonte_plano))
     db.commit()
 
     escrever_csv(args.saida / "versoes.csv", ["versao","tag","commit_tag","commit_main","nucleo","comodos","moradores_modelados","cenarios","execucoes","estado"], versoes_csv)
@@ -214,7 +217,7 @@ def main():
         "estaticas": [list(r) for r in estaticas_csv],
         "dinamicas": [list(r) for r in dinamicas_csv if r[2] == "TODAS" and r[3] in selecionadas],
         "experimentos": [list(r) for r in EXPERIMENTOS_PROPOSTOS],
-        "fontes": [["Plano v1dt.1", str(args.plano), sha256(args.plano), "marco planejado"], ["Sincronismo", str(args.sincronismo), sha256(args.sincronismo), "inventário inicial; reconferido via Git"]] + [[f"Dados {v}", str(args.repos / VERSOES[v]['repo'] / 'dados' / f'experimentos-{v}-20261029.csv'), sha256(args.repos / VERSOES[v]['repo'] / 'dados' / f'experimentos-{v}-20261029.csv'), VERSOES[v]["tag"]] for v in VERSOES],
+        "fontes": [["Plano v3dt.1", str(args.plano), sha256(args.plano), "marco planejado"], ["Sincronismo", str(args.sincronismo), sha256(args.sincronismo), "inventário inicial; reconferido via Git"]] + [[f"Dados {v}", str(args.repos / VERSOES[v]['repo'] / 'dados' / f"{VERSOES[v]['dados']}.csv"), sha256(args.repos / VERSOES[v]['repo'] / 'dados' / f"{VERSOES[v]['dados']}.csv"), VERSOES[v]["tag"]] for v in VERSOES],
     }
     (args.saida / "workbook-data.json").write_text(json.dumps(workbook_data, ensure_ascii=False, indent=2), encoding="utf-8")
 
@@ -228,9 +231,9 @@ def main():
         resumo.append(row)
     rel = [
         "# Evolução experimental da plataforma Reg10k — base PCS5039", "",
-        f"**Gerado em:** {agora}  ",
-        "**Escopo observado:** tags v0dtb, v1dtc e v2dta, todas sobre nucleo-v1.2.  ",
-        "**Escopo planejado:** v1dt.1/nucleo-v1.3, ainda sem resultados empíricos.", "",
+        f"**Gerado em:** {agora}",
+        "**Escopo observado:** tags v0dtc, v1dt.1, v2dtb e v3dt, todas sobre nucleo-v1.3.",
+        "**Escopo planejado:** v3dt.1/nucleo-v1.4, com aprendizado comportamental ainda sem resultados empíricos.", "",
         "## Síntese quantitativa", "",
         "| Versão | Cômodos | Cenários | Execuções | LOC rastreadas | Eventos médios | Eventos/cômodo | Fidelidade média do espelho (%) |",
         "|---|---:|---:|---:|---:|---:|---:|---:|",
@@ -239,18 +242,18 @@ def main():
         rel.append(f"| {v} | {c} | {s} | {e} | {int(l)} | {ev:.2f} | {evc:.2f} | {fid:.2f} |")
     rel += [
         "", "## Leitura de engenharia", "",
-        "1. A progressão V0→V1→V2 aumenta a topologia de 1 para 2 e 4 cômodos, mas mantém núcleo, sementes e controladores; isso forma um quase-experimento de escalabilidade espacial.",
+        "1. A progressão V0→V1→V2→V3 aumenta a topologia de 1 para 2, 4 e 7 cômodos, mantendo núcleo, sementes e controladores; isso forma um quase-experimento de escalabilidade espacial.",
         "2. Totais brutos crescem com a planta. As conclusões do artigo devem privilegiar medidas por cômodo, por minuto ocupado e comparações pareadas por cenário/semente.",
-        "3. As famílias F1–F7 cobrem uso normal, falsos negativos, falsos positivos, falhas, rede, comandos remotos e espelho. Resultados agregados sem estratificação podem ocultar o mecanismo responsável.",
-        "4. A v1dt.1 amplia o eixo comportamental com F8–F10. Ela deve entrar na base como marco planejado até existir CSV e manifesto reproduzíveis.",
+        "3. As famílias F1–F10 cobrem uso normal, falsos negativos, falsos positivos, falhas, rede, comandos remotos, espelho, ocupação múltipla, sono e presença incompatível. Resultados agregados sem estratificação podem ocultar o mecanismo responsável.",
+        "4. A v1dt.1 e as versões sobre nucleo-v1.3 fornecem evidência observada do eixo comportamental; aprendizado do gêmeo permanece como marco planejado da v3dt.1.",
         "5. O Digital Twin deve ser avaliado por fidelidade e pela decomposição do erro: percepção local versus sincronização, além de atualidade, divergência e reconciliação.",
         "", "## Regras de interpretação", "",
         "- São resultados de simulação determinística, não medições de residências reais.",
         "- Correlação não demonstra causalidade; famílias e parâmetros devem ser controlados.",
-        "- O número de moradores do CSV representa entidades simuladas atuais; a v1dt.1 muda essa população e exige nova rodada de 30 sementes.",
+        "- O número de moradores varia por cenário na V1; comparações comportamentais devem controlar essa população simulada.",
         "- O SQLite preserva cada execução bruta em JSON e as sínteses em tabelas normalizadas, com hashes SHA-256 das fontes.",
         "", "## Próxima rodada mínima", "",
-        "Implementar v1dt.1, congelar tag e commit do núcleo, executar os dois controladores nas mesmas 30 sementes, publicar CSV+manifesto e recalcular E01–E10. Para F10, acrescentar matriz de confusão e latências de suspeita, confirmação e conciliação.",
+        "Implementar v3dt.1 sobre nucleo-v1.4, congelar tags limpas, executar os dois controladores nas mesmas 30 sementes e avaliar previsão, sugestão, aceite, energia, conforto, calibração e deriva.",
     ]
     (args.saida / "avaliacao-evolucao-pcs5039.md").write_text("\n".join(rel) + "\n", encoding="utf-8")
     db.close()
