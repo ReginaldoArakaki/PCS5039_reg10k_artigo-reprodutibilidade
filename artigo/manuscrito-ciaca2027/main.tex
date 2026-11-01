@@ -45,7 +45,20 @@ Uma automação de iluminação pode parecer um problema encerrado: detectar pre
 
 Essas perguntas motivaram a evolução do Reg10k, kit usado como exemplo condutor da disciplina PCS5039 -- Engenharia de Software Orientada a IoT. O objetivo não foi antecipar uma plataforma comercial, mas criar uma sequência didática na qual cada incremento introduz capacidades, falhas e métricas observáveis. A automação isolada evolui para Hub, processamento de eventos, Digital Twin, plataforma e base experimental. O mesmo padrão foi depois reconhecido em projetos de monitoramento de pontes, apoio a idosos, CI/CD de hardware e software e veículos autônomos.
 
-O artigo investiga quatro questões: (RQ1) como organizar a evolução incremental sem perder comparabilidade? (RQ2) que métricas evitam conclusões enganosas entre topologias distintas? (RQ3) que problemas o Digital Twin torna mensuráveis além do controle local? (RQ4) em que medida o kit apoia a transferência do raciocínio arquitetural a outros domínios? A contribuição combina artefato, protocolo e evidência: quatro versões publicadas, 10.500 execuções determinísticas, análise pareada e pacote de reprodutibilidade. As afirmações pedagógicas são limitadas à viabilidade e à transferência estrutural observada; não se reivindica ganho causal de aprendizagem.
+ A literatura já descreve Digital Twins para manufatura e sistemas ciberfísicos, bem como arquiteturas residenciais voltadas à gestão de energia, mas esses trabalhos não têm como foco um protocolo didático que acompanhe, com versões comparáveis, a passagem da automação local a uma plataforma orientada a eventos. \citep{kritzinger2018,tao2019,fujii2022} Na educação, propostas de modelagem arquitetural coexistem com revisões que apontam a necessidade de instrumentos validados e evidências mais robustas sobre resultados de aprendizagem. \citep{brandao2026,harris2026,coombs2026} Esse quadro motiva um laboratório que torne decisões arquiteturais observáveis e reproduzíveis sem presumir, de antemão, efetividade pedagógica.
+
+Diante dessas lacunas, o artigo investiga quatro questões: (RQ1) como organizar a evolução incremental sem perder comparabilidade? (RQ2) que métricas evitam conclusões enganosas entre topologias distintas? (RQ3) que problemas o Digital Twin torna mensuráveis além do controle local? (RQ4) em que medida o kit apoia a transferência do raciocínio arquitetural a outros domínios? A contribuição combina artefato, protocolo e evidência: quatro versões publicadas, 10.500 execuções determinísticas, análise pareada e pacote de reprodutibilidade. As afirmações pedagógicas são limitadas à viabilidade e à transferência estrutural observada; não se reivindica ganho causal de aprendizagem.
+
+O exercício de automação da iluminação residencial é apresentado aos estudantes na Figura~\ref{fig:iluminacao}. A imagem mostra, de forma prática, um sistema local que conecta sensores de passagem, sensores de presença e atuadores para controlar a iluminação dos cômodos. A partir desse desafio, todo o fluxo de concepção da solução de engenharia é posto em questão: do entendimento e da modelagem à integração e ao controle da arquitetura do sistema e da expansão da integração com o Gêmeo Digital na evolução para uma plataforma digital de residencias automatizadas conectadas.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.88\linewidth]{prism-uploads/pagina-3.png}
+\caption{Exercício de automação residencial da iluminação, com sensores de passagem e presença, atuadores e requisitos de controle.}
+\label{fig:iluminacao}
+\end{figure}
+
+O restante do artigo está organizado da seguinte forma: a Seção 2 apresenta a fundamentação e os trabalhos relacionados; a Seção 3 descreve o método; as Seções 4 e 5 detalham a arquitetura e sua evolução; a Seção 6 reúne resultados, discussão e evidências de transferência na disciplina; e a Seção 7 conclui o trabalho e indica direções futuras.
 
 \section{Fundamentação e trabalhos relacionados}
 
@@ -247,9 +260,11 @@ Quando residências são conectadas, eventos derivados podem apoiar recomendaç�
 
 A evolução planejada v3dt.1 deverá fechar um novo ciclo: histórico local de 30 dias, perfil por cômodo e faixa horária, previsão ou sugestão explicável, aceite do morador, aplicação no Hub e avaliação do efeito sobre energia, conforto, calibração e deriva. Até que essa rodada seja publicada, o manuscrito distingue explicitamente comportamento observado de comportamento aprendido.
 
-\section{O laboratório na PCS5039}
+\section{Resultados e discussão}
 
-O encadeamento evento $\rightarrow$ CEP $\rightarrow$ Digital Twin $\rightarrow$ ação funciona como linguagem comum. Nos projetos, muda a entidade do gêmeo e a janela decisória, mas permanece a necessidade de correlacionar evidências, comparar estado presente com comportamento esperado e agir em tempo útil (Tabela~\ref{tab:transferencia}).
+\subsection{Transferência do laboratório na PCS5039}
+
+O encadeamento entre eventos, processamento CEP, Digital Twin e ação funciona como linguagem comum. Nos projetos, muda a entidade do gêmeo e a janela decisória, mas permanece a necessidade de correlacionar evidências, comparar o estado presente com o comportamento esperado e agir em tempo útil; a tabela a seguir sintetiza os quatro domínios.
 
 \begin{table}[ht]
 \centering
@@ -270,7 +285,6 @@ Veículo autônomo & veículo/entorno & obstáculo na distância de frenagem & f
 
 Essa transferência é evidência de reutilização conceitual, não de efetividade pedagógica. Uma avaliação posterior deverá usar rubrica comum para arquitetura, eventos, gêmeo e reprodutibilidade; comparar entregas iniciais e finais; e triangular artefatos, testes e percepção dos participantes.
 
-\section{Resultados e discussão}
 
 \subsection{Cobertura e aumento de complexidade}
 
@@ -311,7 +325,17 @@ Quatro domínios discentes & transferência do padrão & sem efeito causal \\
 \end{tabularx}
 \end{table}
 
-As respostas às RQs são parciais e delimitadas. Para RQ1, versões ligam capacidade nova a problema observável sob protocolo comum. Para RQ2, medidas precisam ser estratificadas e normalizadas. Para RQ3, o gêmeo torna mensuráveis percepção, sincronização, atualidade e incerteza. Para RQ4, há transferência estrutural, ainda sem mensuração causal de aprendizagem.
+\subsection{Respostas às questões de pesquisa e comparação com a literatura}
+
+
+RQ1 — Evolução incremental e comparabilidade. A sequência V0--V3 associa cada incremento de capacidade a novos cenários, requisitos e invariantes, preservando um núcleo comum e um protocolo determinístico. Isso responde à questão em termos de organização do artefato, embora não elimine a diferença de cobertura entre versões. Em relação às descrições arquiteturais e ao ciclo de construção e avaliação da Design Science, o Reg10k acrescenta uma operacionalização experimental versionada, na qual os efeitos das decisões podem ser inspecionados em execuções pareadas. \citep{iso42010,hevner2004,peffers2007}
+
+RQ2 — Métricas entre topologias. Os resultados mostram que a contagem de eventos por execução aumenta com a planta, enquanto a normalização por cômodo altera a interpretação; por isso, totais, taxas normalizadas, estratificação por cenário e diferenças pareadas devem ser lidos em conjunto. Essa abordagem concretiza a avaliação de qualidade proposta em modelos como a ISO/IEC 25010, mas também evidencia que nenhum indicador isolado resume o compromisso entre energia, conforto e fidelidade. \citep{iso25010}
+
+RQ3 — Problemas mensuráveis pelo Digital Twin. A decomposição entre erro de percepção no Hub e erro de sincronização até a plataforma distingue uma representação equivocada do mundo de um atraso de comunicação: neste modelo, o primeiro domina. A distinção é compatível com a literatura que diferencia níveis de integração entre entidade física e representação digital, e complementa estudos de gêmeos residenciais ao medir explicitamente a divergência de estado, além do uso energético. Como os resultados vêm de simulação, não estabelecem o mesmo predomínio em instalações físicas. \citep{kritzinger2018,tao2019,fujii2022}
+
+RQ4 — Transferência a outros domínios. Os projetos de pontes, apoio a idosos, CI/CD e veículos autônomos reutilizam a estrutura evento--correlação--gêmeo--ação, indicando transferência conceitual do raciocínio arquitetural. O achado é coerente com propostas de Digital Twins educacionais, mas deve ser interpretado à luz das revisões que apontam evidência educacional ainda preliminar e escassez de medidas validadas: não houve avaliação pré/pós nem grupo de comparação neste estudo. Portanto, a resposta é afirmativa quanto à reutilização estrutural observada, mas inconclusiva quanto à aprendizagem ou à sua causalidade. \citep{brandao2026,harris2026,coombs2026}
+
 
 \section{Conclusão}
 
